@@ -1,8 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
 import layout from '../templates/components/autocomplete-input';
 import KeyboardNavMixin from '../mixins/keyboard-nav';
-
-const { Component, computed, observer } = Ember;
 
 export default Component.extend(KeyboardNavMixin, {
 
