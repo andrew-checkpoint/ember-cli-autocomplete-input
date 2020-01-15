@@ -2,9 +2,11 @@ import Component from '@ember/component';
 import { computed, observer } from '@ember/object';
 import layout from '../templates/components/autocomplete-input';
 import KeyboardNavMixin from '../mixins/keyboard-nav';
+import { later } from '@ember/runloop';
 
 export default Component.extend(KeyboardNavMixin, {
-
+  classNames: ['autocomplete-input'],
+  classNameBindings: ['hasFocus'],
   layout,
 
   // Attributes
@@ -25,10 +27,17 @@ export default Component.extend(KeyboardNavMixin, {
 
   placeholder: '',
 
-  autocomplete: '',
+  autocomplete: false,
 
+  nameGen: computed('name', function(){
+    return this.name || `autocomplete_${Math.floor(Math.random() * 0xFFFFFF)}`
+  }),
+
+  'on-focus-in'(){},
+  'on-focus-out'(){},
   // Properties
 
+  hasFocus: false,
   highlightedResult: computed('results.[]', 'highlightedResultIndex', function() {
     return this.get('results')[this.get('highlightedResultIndex')];
   }),
@@ -47,6 +56,18 @@ export default Component.extend(KeyboardNavMixin, {
     let inputEl = this.element.querySelector('input[type="text"]');
     this.bindKeys(inputEl);
     this.set('lastTerm', this.get('term'));
+  },
+
+  onInputFocusIn() {
+    this.set('hasFocus', true);
+    this['on-focus-in']();
+  },
+
+  onInputFocusOut() {
+    later(()=> {
+      this.set('hasFocus', false);
+      this['on-focus-out']();
+    }, 250)
   },
 
   // Keyboard Nav actions

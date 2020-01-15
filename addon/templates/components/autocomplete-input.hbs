@@ -1,17 +1,15 @@
-<div class='autocomplete-input'>
-  {{input id=name name=name type='text' value=term autocomplete=autocomplete placeholder=placeholder}}
+{{input id=name name=nameGen type='text' value=term autocomplete=autocomplete placeholder=placeholder focus-in=(action onInputFocusIn) focus-out=(action onInputFocusOut) }}
 
-  {{#if hasResults}}
-    <div class='autocomplete-results'>
-      {{#each results as |result|}}
-        {{#if hasBlock}}
-            {{#autocomplete-result-item selectResult=(action selectResult) highlightedResult=highlightedResult result=result resultName=resultName resultValue=resultValue}}
-              {{yield result}}
-            {{/autocomplete-result-item}}
-          {{else}}
-            {{autocomplete-result-item selectResult=(action selectResult) highlightedResult=highlightedResult result=result resultName=resultName resultValue=resultValue}}
-          {{/if}}
-      {{/each}}
-    </div>
-  {{/if}}
-</div>
+{{#if hasResults}}
+  <div class='autocomplete-results'>
+    {{#each results as |result|}}
+      {{#if hasBlock}}
+          {{#autocomplete-result-item selectResult=(action selectResult) highlightedResult=highlightedResult result=result resultName=resultName resultValue=resultValue}}
+            {{yield result}}
+          {{/autocomplete-result-item}}
+        {{else}}
+          {{autocomplete-result-item selectResult=(action selectResult) highlightedResult=highlightedResult result=result resultName=resultName resultValue=resultValue}}
+        {{/if}}
+    {{/each}}
+  </div>
+{{/if}}
