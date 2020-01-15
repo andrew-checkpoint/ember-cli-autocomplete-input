@@ -1,3 +1,7 @@
 <div class='autocomplete-result-item {{if isHighlighted "highlight"}}' {{action 'selectResult' result}}>
-  {{name}}
+  {{#if hasBlock}}
+    {{yield}}
+  {{else}}
+    {{name}}
+  {{/if}}
 </div>

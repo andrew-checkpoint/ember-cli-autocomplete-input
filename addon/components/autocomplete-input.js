@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/autocomplete-input';
-import KeyboardNavMixin from 'ember-cli-keyboard-nav/mixins/keyboard-nav';
+import KeyboardNavMixin from '../mixins/keyboard-nav';
 
 const { Component, computed, observer } = Ember;
 
@@ -45,7 +45,8 @@ export default Component.extend(KeyboardNavMixin, {
   // Hooks
 
   didInsertElement() {
-    this.bindKeys(this.$('input[type="text"]'));
+    let inputEl = this.element.querySelector('input[type="text"]');
+    this.bindKeys(inputEl);
     this.set('lastTerm', this.get('term'));
   },
 
